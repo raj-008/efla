@@ -194,7 +194,7 @@ export default function ComingSoonPage() {
               fontWeight: 500,
             }}
           >
-            We&apos;re currently building the most seamless Logistics, E-commerce &amp; Printing service platform. All our services will be available soon. Stay tuned for updates!
+            We&apos;re currently building the best Logistics, E-commerce &amp; Printing service platform. All our services will be available soon. Stay tuned for updates!
           </p>
 
             <AnimatedTruck />
