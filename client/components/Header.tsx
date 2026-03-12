@@ -61,9 +61,17 @@ function ChevronDown({ className = "" }: { className?: string }) {
   );
 }
 
+function ChevronRight({ open }: { open?: boolean }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ transition: "transform 0.25s", transform: open ? "rotate(90deg)" : "rotate(0deg)" }}>
+      <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function Logo({ compact }: { compact: boolean }) {
   return (
-    <Link href="/" className="flex items-center gap-1 shrink-0">
+    <Link href="/" className="flex items-center gap-1.5 shrink-0">
       <img src="/assets/logo.png" alt="Efla Logo" className="object-contain transition-all duration-300" style={{ height: compact ? "36px" : "42px", width: "auto" }} />
       <span
         style={{
@@ -81,12 +89,12 @@ function Logo({ compact }: { compact: boolean }) {
   );
 }
 
-function DropdownMenu({ items }: { items: { label: string; href: string }[] }) {
+function DesktopDropdown({ items }: { items: { label: string; href: string }[] }) {
   return (
     <div className="absolute top-full left-1/2 -translate-x-10 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50 animate-dropdown mt-3">
       <div className="absolute -top-3 left-0 right-0 h-3" />
       {items.map((item) => (
-        <Link key={item.label} href={item.href} className="block px-4 py-2 text-sm text-gray-600 hover:text-violet-600 hover:bg-violet-50 transition-colors duration-150">
+        <Link key={item.label} href={item.href} className="block px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-[#f8d166]/20 transition-colors duration-150">
           {item.label}
         </Link>
       ))}
@@ -94,10 +102,9 @@ function DropdownMenu({ items }: { items: { label: string; href: string }[] }) {
   );
 }
 
-function NavItemComponent({ item, scrolled }: { item: NavItem; scrolled: boolean }) {
+function DesktopNavItem({ item, scrolled }: { item: NavItem; scrolled: boolean }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  // Delay timer ref so closing is debounced
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const cancelClose = useCallback(() => {
@@ -106,21 +113,17 @@ function NavItemComponent({ item, scrolled }: { item: NavItem; scrolled: boolean
       closeTimer.current = null;
     }
   }, []);
-
   const scheduleClose = useCallback(() => {
     closeTimer.current = setTimeout(() => setOpen(false), 100);
   }, []);
-
-  // Clean up on unmount
   useEffect(() => () => cancelClose(), [cancelClose]);
 
-  const textClass = `relative text-sm font-medium transition-colors duration-200 group ${scrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-800 hover:text-gray-900"}`;
-
+  const textCls = `relative text-sm font-medium transition-colors duration-200 group ${scrolled ? "text-gray-700 hover:text-gray-900" : "text-gray-800 hover:text-gray-900"}`;
   const underline = <span className="absolute -bottom-0.5 left-0 h-[2px] w-0 bg-[#f8d166] rounded-full group-hover:w-full transition-all duration-300 ease-out" />;
 
   if (!item.hasDropdown) {
     return (
-      <Link href={item.href} className={textClass}>
+      <Link href={item.href} className={textCls}>
         {item.label}
         {underline}
       </Link>
@@ -137,59 +140,106 @@ function NavItemComponent({ item, scrolled }: { item: NavItem; scrolled: boolean
       }}
       onMouseLeave={scheduleClose}
     >
-      <button className={`flex items-center gap-1 ${textClass}`} aria-expanded={open} aria-haspopup="true">
+      <button className={`flex items-center gap-1 ${textCls}`} aria-expanded={open} aria-haspopup="true">
         {item.label}
         <ChevronDown className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
         {underline}
       </button>
-
-      {open && item.children && <DropdownMenu items={item.children} />}
+      {open && item.children && <DesktopDropdown items={item.children} />}
     </div>
   );
 }
 
-function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+function MobileDropdown({ open, onClose, headerBottom }: { open: boolean; onClose: () => void; headerBottom: number }) {
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!open) setExpanded(null);
+  }, [open]);
+
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,opsz,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
-      `}</style>
-      <div className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 lg:hidden ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`} onClick={onClose} />
+      <div
+        className={`fixed inset-x-0 bottom-0 z-30 lg:hidden transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        style={{
+          top: 0,
+          background: `linear-gradient(to bottom, transparent ${headerBottom}px, rgba(0,0,0,0.28) ${headerBottom}px)`,
+        }}
+        onClick={onClose}
+      />
 
-      <div className={`fixed top-0 right-0 h-full w-72 bg-white z-50 shadow-2xl transition-transform duration-300 ease-out lg:hidden ${open ? "translate-x-0" : "translate-x-full"}`}>
-        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-          <span className="font-bold text-gray-900 text-lg">Efla</span>
-          <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors" aria-label="Close menu">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M2 2L14 14M14 2L2 14" stroke="#374151" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </button>
-        </div>
-
-        <nav className="px-4 py-4 space-y-1">
-          {NAV_ITEMS.map((item) => (
+      <div
+        className={`fixed left-3 right-3 z-40 lg:hidden transition-all duration-300 ease-out origin-top ${
+          open ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"
+        }`}
+        style={{
+          top: headerBottom + 8,
+          background: "#ffffff",
+          borderRadius: 20,
+          boxShadow: "0 12px 48px rgba(0,0,0,0.14)",
+          overflow: "hidden",
+        }}
+      >
+        <nav className="px-2 pt-2 pb-1">
+          {NAV_ITEMS.map((item, idx) => (
             <div key={item.label}>
-              <Link
-                href={item.href}
-                className="flex items-center justify-between px-3 py-2.5 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-[#f8d166]/20 font-medium text-sm transition-colors"
-                onClick={onClose}
-              >
-                {item.label}
-                {item.hasDropdown && <ChevronDown />}
-              </Link>
+              {item.hasDropdown ? (
+                <>
+                  <button
+                    onClick={() => setExpanded((p) => (p === item.label ? null : item.label))}
+                    className="w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-gray-800 font-medium text-sm transition-colors hover:bg-gray-50 active:bg-gray-100"
+                  >
+                    <span>{item.label}</span>
+                    <ChevronRight open={expanded === item.label} />
+                  </button>
+
+                  <div
+                    style={{
+                      maxHeight: expanded === item.label ? `${(item.children?.length ?? 0) * 48}px` : "0px",
+                      overflow: "hidden",
+                      transition: "max-height 0.3s ease",
+                    }}
+                  >
+                    <div className="ml-3 mr-1 mb-1 rounded-xl overflow-hidden" style={{ background: "#faf9f6" }}>
+                      {item.children?.map((child) => (
+                        <Link
+                          key={child.label}
+                          href={child.href}
+                          onClick={onClose}
+                          className="flex items-center px-4 py-3 text-sm text-gray-600 hover:text-gray-900 hover:bg-[#f8d166]/20 transition-colors"
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <Link href={item.href} onClick={onClose} className="flex items-center px-4 py-3.5 rounded-xl text-gray-800 font-medium text-sm hover:bg-gray-50 transition-colors">
+                  {item.label}
+                </Link>
+              )}
+              {idx < NAV_ITEMS.length - 1 && <div className="mx-4" style={{ height: 1, background: "#f0ece0" }} />}
             </div>
           ))}
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-100 space-y-3">
+        <div className="flex items-center gap-3 px-4 py-4" style={{ borderTop: "1.5px solid #f0ece0" }}>
           <Link
             href="/sign-in"
-            className="block text-center py-2.5 px-4 rounded-full border-2 border-[#000000] text-gray-800 font-medium text-sm hover:bg-[#f8d166] hover:border-none transition-all duration-200"
             onClick={onClose}
+            className="flex-1 text-center py-2.5 rounded-full border-2 border-black text-gray-900 font-semibold text-sm hover:bg-[#f8d166] hover:border-[#f8d166] transition-all duration-200"
           >
             Log In
           </Link>
-          <Link href="/sign-up" className="block text-center py-2.5 px-4 rounded-full bg-[#f8d166] text-gray-900 font-medium text-sm hover:bg-[#f5c840] transition-all duration-200" onClick={onClose}>
+          <Link
+            href="/sign-up"
+            onClick={onClose}
+            className="flex-1 text-center py-2.5 rounded-full font-semibold text-sm transition-all duration-200"
+            style={{ background: "#f8d166", color: "#111111" }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#f5c840")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#f8d166")}
+          >
             Sign Up
           </Link>
         </div>
@@ -201,12 +251,34 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [headerBottom, setHeaderBottom] = useState(64);
 
   useEffect(() => {
-    const THRESHOLD = 60;
-    const handleScroll = () => setScrolled(window.scrollY > THRESHOLD);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const measure = () => {
+      if (headerRef.current) setHeaderBottom(headerRef.current.getBoundingClientRect().bottom);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    window.addEventListener("scroll", measure, { passive: true });
+    return () => {
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure);
+    };
+  }, [scrolled]);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setMobileOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   useEffect(() => {
@@ -215,63 +287,71 @@ export default function Header() {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
-  const isPill = scrolled; // for lg+ screens
+
+  const isPill = scrolled;
 
   return (
     <>
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
         @keyframes dropdown {
           from { opacity: 0; transform: translateX(-40px) translateY(-6px); }
-          to   { opacity: 1; transform: translateX(-40px) translateY(0);    }
+          to   { opacity: 1; transform: translateX(-40px) translateY(0); }
         }
         .animate-dropdown { animation: dropdown 0.18s ease-out forwards; }
       `}</style>
 
       <header
-        className="fixed top-3 lg:top-0 left-0 right-0 z-30 transition-all duration-300"
-        style={{
-          paddingTop: scrolled ? "10px" : "0px",
-          paddingLeft: "16px",
-          paddingRight: "16px",
-        }}
+        ref={headerRef}
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 max-lg:pt-3 max-lg:px-3 ${mobileOpen ? "bg-[#00000047]" : ""}`}
+        style={scrolled ? { paddingTop: 12, paddingLeft: 16, paddingRight: 16 } : undefined}
       >
         <div
           className={`
             mx-auto transition-all duration-500
-            
             max-w-6xl bg-white rounded-3xl shadow-lg px-5 py-3
             ${isPill ? "" : "lg:max-w-none lg:bg-transparent lg:rounded-none lg:shadow-none lg:px-6 lg:py-4"}
           `}
         >
-          <div className="flex items-center justify-between gap-6">
-            <Logo scrolled={scrolled} />
+          <div className="flex items-center justify-between gap-4">
+            <Logo compact={true} />
 
             <nav className="hidden lg:flex items-center gap-6 xl:gap-7">
               {NAV_ITEMS.map((item) => (
-                <NavItemComponent key={item.label} item={item} scrolled={isPill} />
+                <DesktopNavItem key={item.label} item={item} scrolled={isPill} />
               ))}
             </nav>
 
             <div className="hidden lg:flex items-center gap-2.5">
-              <Link href="/sign-in" className="px-4 py-2 rounded-full text-sm font-medium border-2 border-[#000000] text-gray-800 hover:bg-[#f8d166] transition-all duration-200">
+              <Link href="/sign-in" className="px-4 py-2 rounded-full text-sm font-medium border-2 border-black text-gray-800 hover:bg-[#f8d166] hover:border-[#f8d166] transition-all duration-200">
                 Log In
               </Link>
             </div>
 
             <button
-              className="lg:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-gray-100 transition-colors"
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open menu"
+              className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
             >
-              <span className="block h-[3px] w-5 rounded-full bg-gray-800" />
-              <span className="block h-[3px] w-5 rounded-full bg-gray-800" />
-              <span className="block h-[3px] w-5 rounded-full bg-gray-800" />
+              {mobileOpen ? (
+                /* Clean X icon */
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M2 2L16 16M16 2L2 16" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" />
+                </svg>
+              ) : (
+                <span className="flex flex-col items-center gap-1.5">
+                  <span className="block h-[3px] w-5 rounded-full bg-gray-800" />
+                  <span className="block h-[3px] w-5 rounded-full bg-gray-800" />
+                  <span className="block h-[3px] w-5 rounded-full bg-gray-800" />
+                </span>
+              )}
             </button>
           </div>
         </div>
       </header>
 
-      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <MobileDropdown open={mobileOpen} onClose={() => setMobileOpen(false)} headerBottom={headerBottom} />
     </>
   );
 }
