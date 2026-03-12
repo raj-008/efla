@@ -78,7 +78,7 @@ const DELIVERY_ESTIMATES: Record<string, { time: string }> = {
 // Slider placeholder images — replace with your own
 const SLIDER_IMAGES = [
   { src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80&auto=format&fit=crop", alt: "Logistics network" },
-  { src: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=1200&q=80&auto=format&fit=crop", alt: "Shipping & delivery" },
+  { src: "https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?w=1200&q=80&auto=format&fit=crop", alt: "Shipping & delivery" },
   { src: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200&q=80&auto=format&fit=crop", alt: "Last mile delivery" },
 ];
 
