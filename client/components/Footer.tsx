@@ -327,12 +327,8 @@ export default function Footer() {
           {/* ── Bottom bar ───────────────────────────────────────────────── */}
           <div className="mt-14 pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.12)" }}>
             <div className="flex flex-col gap-2">
-              <p style={{ fontSize: "0.8125rem", fontWeight: 700, color: "white" }}>Registered Office:</p>
-              <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.7 }}>
-                © 2025 EFLA Group Pvt. Ltd.
-                <br />
-                Plot No. 63, Jagnath Vihar, Kalwar Road, Jhotwara, Jaipur, Rajasthan - 302012
-              </p>
+              <p style={{ fontSize: "0.8125rem", fontWeight: 700, color: "white" }}>Company Information:</p>
+              <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.7 }}>© 2025 Efla Group Pvt. Ltd.</p>
               <p style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.9 }}>
                 GSTIN: 08AAJCE4820G1ZP
                 <br />
