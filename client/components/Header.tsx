@@ -16,39 +16,28 @@ const NAV_ITEMS: NavItem[] = [
     href: "#",
     hasDropdown: true,
     children: [
-      { label: "Shipping", href: "#" },
-      { label: "Tracking", href: "#" },
-      { label: "Warehousing", href: "#" },
+      { label: "Shipping", href: "/shipping" },
+      { label: "Warehousing", href: "/warehouse" },
     ],
   },
-  {
-    label: "Platform",
-    href: "#",
-    hasDropdown: true,
-    children: [
-      { label: "Integrations", href: "#" },
-      { label: "Analytics", href: "#" },
-    ],
-  },
-  { label: "Pricing", href: "#" },
+  { label: "Pricing", href: "/pricing" },
   {
     label: "Partners",
     href: "#",
     hasDropdown: true,
     children: [
-      { label: "Courier Partners", href: "#" },
-      { label: "Tech Partners", href: "#" },
+      { label: "Courier Partners", href: "/courier-partner" },
+      { label: "Tech Partners", href: "/tech-partner" },
     ],
   },
-  { label: "Track Order", href: "#" },
+  { label: "Track Order", href: "/track" },
   {
     label: "Resources",
     href: "#",
     hasDropdown: true,
     children: [
-      { label: "Blog", href: "#" },
-      { label: "Docs", href: "#" },
-      { label: "Case Studies", href: "#" },
+      { label: "Blog", href: "/blogs" },
+      { label: "Docs", href: "/docs" },
     ],
   },
 ];
