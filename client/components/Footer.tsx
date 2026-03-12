@@ -200,9 +200,6 @@ export default function Footer() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
-        .footer-font { font-family: 'Plus Jakarta Sans', sans-serif; }
         .footer-link {
           color: rgba(255,255,255,0.55);
           font-size: 0.875rem;
@@ -222,7 +219,7 @@ export default function Footer() {
         }
       `}</style>
 
-      <footer className="footer-font w-full" style={{ background: "#111111", color: "white" }}>
+      <footer className="w-full" style={{ background: "#111111", color: "white" }}>
         <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 pt-14 pb-8">
           {/* ── Top section ──────────────────────────────────────────────── */}
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-8">
@@ -263,37 +260,9 @@ export default function Footer() {
                   ))}
                 </div>
               </div>
-
-              {/* <hr className="footer-divider" style={{ width: "100%" }} /> */}
-
-              {/* App download */}
-              {/* <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: "#F8D166" }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                    <line x1="12" y1="18" x2="12" y2="18" strokeWidth="2.5"/>
-                  </svg>
-                </div>
-                <div>
-                  <p style={{ fontSize: "0.875rem", fontWeight: 700, color: "white", lineHeight: 1.3 }}>
-                    Download our app now!
-                  </p>
-                  <p style={{ fontSize: "0.775rem", color: "rgba(255,255,255,0.45)", marginTop: 2 }}>
-                    Scan the QR Code to download
-                  </p>
-                </div>
-              </div> */}
-
-              {/* QR code */}
-              {/* <div className="rounded-2xl overflow-hidden p-3" style={{ background: "#111111", border: "1.5px solid rgba(255,255,255,0.12)", width: 152, height: 152 }}>
-                <QRCode />
-              </div> */}
             </div>
 
-            {/* ── Right nav columns ─────────────────────────────────────── */}
             <div className="flex-1 flex flex-col gap-10">
-              {/* Top nav: Company, Quick Links, Support, Countries */}
               <div className="sm:ms-12 grid grid-cols-2 sm:grid-cols-3 gap-8">
                 {Object.entries(NAV_LINKS).map(([title, links]) => (
                   <div key={title} className="flex flex-col gap-4">
@@ -308,23 +277,9 @@ export default function Footer() {
                   </div>
                 ))}
               </div>
-
-              {/* Divider */}
-              {/* <hr className="footer-divider" /> */}
-
-              {/* Domestic Cities */}
-              {/* <div className="flex flex-col gap-5">
-                <h4 style={{ fontSize: "1rem", fontWeight: 700, color: "white" }}>Domestic Cities</h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-6 gap-y-3">
-                  {CITIES.map((city) => (
-                    <a key={city} href="#" className="footer-link">{city}</a>
-                  ))}
-                </div>
-              </div> */}
             </div>
           </div>
 
-          {/* ── Bottom bar ───────────────────────────────────────────────── */}
           <div className="mt-14 pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.12)" }}>
             <div className="flex flex-col gap-2">
               <p style={{ fontSize: "0.8125rem", fontWeight: 700, color: "white" }}>Company Information:</p>

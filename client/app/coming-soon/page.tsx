@@ -54,7 +54,7 @@ function Logo() {
         style={{
           fontSize: "1.5rem",
           color: "#000000",
-          letterSpacing: "0.03em",
+          letterSpacing: "0.02em",
           lineHeight: 1,
           fontFamily: "'Source Sans 3', sans-serif",
           fontWeight: 700,
@@ -70,12 +70,10 @@ export default function ComingSoonPage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
         *, *::before, *::after { box-sizing: border-box; }
 
         .cs-root {
-          font-family: 'Plus Jakarta Sans', sans-serif;
           min-height: 100vh;
           min-height: 100dvh;
           background: #f3f1ef;
@@ -87,7 +85,6 @@ export default function ComingSoonPage() {
           justify-content: center;
         }
 
-        /* Dot-grid background */
         .cs-root::before {
           content: '';
           position: fixed;
@@ -99,7 +96,6 @@ export default function ComingSoonPage() {
           z-index: 0;
         }
 
-        /* ── Scrollable content wrapper ─────────────────────────── */
         .cs-scroll {
           position: relative;
           z-index: 10;
@@ -114,8 +110,6 @@ export default function ComingSoonPage() {
 
         /* Sora for display text */
         .sora { font-family: 'Sora', sans-serif; }
-
-        /* ── Keyframes ────────────────────────────────────────── */
         
         @keyframes driveTruck {
           0%   { transform: translateX(-100px); }

@@ -31,8 +31,6 @@ interface RateResult {
   total: number;
 }
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
-
 const LOGISTICS_SUBS: SubService[] = [
   { id: "road", label: "Surface  Courier" },
   { id: "express", label: "Express Courier" },
@@ -75,7 +73,6 @@ const DELIVERY_ESTIMATES: Record<string, { time: string }> = {
   express: { time: "2–3 Days" },
 };
 
-// Slider placeholder images — replace with your own
 const SLIDER_IMAGES = [
   { src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80&auto=format&fit=crop", alt: "Logistics network" },
   { src: "https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?w=1200&q=80&auto=format&fit=crop", alt: "Shipping & delivery" },
@@ -87,8 +84,6 @@ const MAIN_SERVICES: { id: MainCategory; label: string; color: string }[] = [
   { id: "ecommerce", label: "E-Commerce", color: "#111111" },
   { id: "printing", label: "Printing", color: "#ca020c" },
 ];
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const emptyAddress = (): AddressForm => ({ pincode: "", name: "", address: "", state: "", city: "", contact: "" });
 
@@ -103,8 +98,6 @@ function calcRate(weight: number, length: number, width: number, height: number)
 function canAutoCalculate(fromPincode: string, toPincode: string, pkg: PackageForm): boolean {
   return fromPincode.trim().length === 6 && toPincode.trim().length === 6 && parseFloat(pkg.weight) > 0 && parseFloat(pkg.length) > 0 && parseFloat(pkg.width) > 0 && parseFloat(pkg.height) > 0;
 }
-
-// ─── Image Slider ─────────────────────────────────────────────────────────────
 
 function ImageSlider() {
   const [index, setIndex] = useState(0);
@@ -123,7 +116,6 @@ function ImageSlider() {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      {/* Slide frame — height reduced 25% (was clamp(180,28vw,320) → clamp(135,21vw,240)) */}
       <div className="relative w-full overflow-hidden rounded-2xl" style={{ height: "clamp(135px, 21vw, 240px)" }}>
         {/* Slides */}
         {SLIDER_IMAGES.map((img, i) => (
@@ -133,7 +125,7 @@ function ImageSlider() {
           </div>
         ))}
 
-        {/* Left arrow — vertically centered, inside left edge */}
+        {/* Left arrow */}
         <button
           onClick={() => go(-1)}
           className="cursor-pointer absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-150"
@@ -144,7 +136,7 @@ function ImageSlider() {
           </svg>
         </button>
 
-        {/* Right arrow — vertically centered, inside right edge */}
+        {/* Right arrow */}
         <button
           onClick={() => go(1)}
           className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-150"
@@ -175,8 +167,6 @@ function ImageSlider() {
   );
 }
 
-// ─── Service Card ─────────────────────────────────────────────────────────────
-
 function ServiceCard({
   service,
   isSelected,
@@ -206,10 +196,8 @@ function ServiceCard({
       }}
       onClick={onSelect}
     >
-      {/* Title with underline */}
       <div className="relative w-fit">
         <h3 style={{ fontSize: "1.05rem", fontWeight: 800, letterSpacing: "-0.01em", lineHeight: 1 }}>{service.label}</h3>
-        {/* Yellow brush underline */}
         {isSelected && isLogistics ? (
           <svg className="absolute w-full" style={{ bottom: -5, left: 0 }} viewBox="0 0 120 6" fill="none" preserveAspectRatio="none">
             <path d="M1 4 Q30 1 60 4 Q90 7 119 3" stroke="#111111" strokeWidth="3" strokeLinecap="round" />
@@ -221,7 +209,6 @@ function ServiceCard({
         )}
       </div>
 
-      {/* Sub-service list */}
       <ul className="flex flex-col gap-1.5 mt-1">
         {visibleSubs.map((s) => (
           <li key={s.id}>
@@ -273,8 +260,6 @@ function ServiceCard({
   );
 }
 
-// ─── Address Fields ───────────────────────────────────────────────────────────
-
 function AddressSection({ title, icon, values, onChange }: { title: string; icon: React.ReactNode; values: AddressForm; onChange: (field: keyof AddressForm, val: string) => void }) {
   const fields: { key: keyof AddressForm; label: string; ph: string; type?: string }[] = [
     { key: "pincode", label: "Pincode", ph: "400001" },
@@ -301,8 +286,6 @@ function AddressSection({ title, icon, values, onChange }: { title: string; icon
     </div>
   );
 }
-
-// ─── Rate Display ─────────────────────────────────────────────────────────────
 
 function RateDisplay({ rate, onBook }: { rate: RateResult; onBook: () => void }) {
   return (
@@ -357,8 +340,6 @@ function ComingSoon({ category }: { category: string }) {
     </div>
   );
 }
-
-// ─── Sub-Service Scroll Row ───────────────────────────────────────────────────
 
 function SubServiceScroll({ services, selectedId, onSelect }: { services: SubService[]; selectedId: string | null; onSelect: (id: string) => void }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -420,8 +401,6 @@ function SubServiceScroll({ services, selectedId, onSelect }: { services: SubSer
   );
 }
 
-// ─── Rate Card ────────────────────────────────────────────────────────────────
-
 function RateCard({ category, selectedSub, onSubSelect }: { category: MainCategory; selectedSub: string | null; onSubSelect: (id: string) => void }) {
   const [from, setFrom] = useState<AddressForm>(emptyAddress());
   const [to, setTo] = useState<AddressForm>(emptyAddress());
@@ -434,7 +413,7 @@ function RateCard({ category, selectedSub, onSubSelect }: { category: MainCatego
     if (canAutoCalculate(from.pincode, to.pincode, pkg)) {
       setRate(calcRate(parseFloat(pkg.weight), parseFloat(pkg.length), parseFloat(pkg.width), parseFloat(pkg.height)));
     } else {
-      setRate(null); // clears rate if user empties a field
+      setRate(null); 
     }
   }, [from.pincode, to.pincode, pkg, isLogistics]);
 
@@ -442,20 +421,16 @@ function RateCard({ category, selectedSub, onSubSelect }: { category: MainCatego
 
   return (
     <div className="w-full max-w-4xl mx-auto rounded-3xl shadow-xl text-left" style={{ background: "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)", border: "1.5px solid #e8e2cc" }}>
-      {/* Sub-service scroll */}
       <div className="p-5 sm:p-6 pb-0">
         <SubServiceScroll services={SUB_SERVICES[category]} selectedId={selectedSub} onSelect={onSubSelect} />
       </div>
 
-      {/* Content — only shows when sub selected */}
       {selectedSub && (
         <div className="p-5 sm:p-6 flex flex-col gap-5">
-          {/* ── Non-logistics: Coming Soon ─────────────────────────────── */}
           {!isLogistics ? (
             <ComingSoon category={category === "ecommerce" ? "E-Commerce" : "Printing"} />
           ) : (
             <>
-              {/* ── Delivery estimates ───────────────────────────────────── */}
               {estimates && (
                 <div className="flex flex-col gap-2">
                   <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#9a9080", textTransform: "uppercase", letterSpacing: "0.05em" }}>Estimated Delivery Time</span>
@@ -468,16 +443,13 @@ function RateCard({ category, selectedSub, onSubSelect }: { category: MainCatego
                       <span style={{ fontSize: "0.78rem", fontWeight: 500, color: "#7a7060" }}>{estimates.time}</span>
                     </div>
                   </div>
-                  {/* Rate calculation note */}
                   <p style={{ fontSize: "0.72rem", color: "#111111", lineHeight: 1.6, marginTop: 2 }}>
                     ℹ️ Rates are calculated based on actual weight or volumetric weight (L×W×H ÷ 5000), whichever is higher. Final rate may vary based on destination and declared value.
                   </p>
                 </div>
               )}
 
-              {/* <div className="h-px" style={{ background: "#eee8d5" }} /> */}
 
-              {/* ── Address form ─────────────────────────────────────────── */}
 <div className="flex flex-col gap-5">
                 {/* From / To — side by side with vertical divider */}
                 <div className="flex flex-col md:flex-row gap-5 md:gap-0">
@@ -557,14 +529,12 @@ function RateCard({ category, selectedSub, onSubSelect }: { category: MainCatego
                   </div>
                 </div>
 
-                {/* Get Rate button */}
                 {!rate && (
   <p style={{ fontSize: "0.7rem", color: "#b0a888", textAlign: "center" }}>
     Enter both 6-digit pincodes + package dimensions to see rate automatically
   </p>
 )}
 
-                {/* Rate result */}
                 {rate && <RateDisplay rate={rate} onBook={() => alert("Booking flow coming soon!")} />}
               </div>
             </>
@@ -572,7 +542,6 @@ function RateCard({ category, selectedSub, onSubSelect }: { category: MainCatego
         </div>
       )}
 
-      {/* Placeholder when no sub selected */}
       {!selectedSub && (
         <div className="px-5 pb-5 pt-3">
           <p style={{ fontSize: "0.82rem", color: "#a5a39b", textAlign: "center" }}>Select a service above to get started</p>
@@ -581,8 +550,6 @@ function RateCard({ category, selectedSub, onSubSelect }: { category: MainCatego
     </div>
   );
 }
-
-// ─── Background ───────────────────────────────────────────────────────────────
 
 function BackgroundPaths() {
   return (
@@ -596,8 +563,6 @@ function BackgroundPaths() {
     </div>
   );
 }
-
-// ─── Hero Section ─────────────────────────────────────────────────────────────
 
 export default function HeroSection() {
   const [activeMain, setActiveMain] = useState<MainCategory | null>(null);
@@ -626,15 +591,12 @@ export default function HeroSection() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
-        .hero-font { font-family: 'Plus Jakarta Sans', sans-serif; }
         div::-webkit-scrollbar { display: none; }
         .input-field {
           width: 100%; background: white; border: 1.5px solid #ddd6be;
           border-radius: 10px; padding: 9px 12px; font-size: 0.8125rem;
           color: #111111; outline: none;
           transition: border-color 0.15s, box-shadow 0.15s;
-          font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .input-field::placeholder { color: #b0a888; }
         .input-field:focus { border-color: #F8D166; }
@@ -647,10 +609,8 @@ export default function HeroSection() {
         <BackgroundPaths />
 
         <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center gap-8">
-          {/* ── Image Slider ──────────────────────────────────────────── */}
           <ImageSlider />
 
-          {/* ── 3 Service Cards ───────────────────────────────────────── */}
           <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4">
             {MAIN_SERVICES.map((svc) => (
               <ServiceCard
@@ -667,7 +627,6 @@ export default function HeroSection() {
             ))}
           </div>
 
-          {/* ── Rate Card (only when main selected) ───────────────────── */}
           {activeMain && (
             <div ref={rateCardRef} className="w-full animate-in" style={{ animation: "fadeSlideIn 0.3s ease both" }}>
               <RateCard category={activeMain} selectedSub={activeSub} onSubSelect={handleSubSelect} />

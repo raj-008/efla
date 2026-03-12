@@ -1,7 +1,5 @@
 "use client";
 
-// ─── Why Choose Us ─────────────────────────────────────────────────────────────
-
 const FEATURES = [
   {
     id: "clarity",
@@ -33,9 +31,6 @@ export default function WhyChooseUs() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        .wcu-font { font-family: 'Plus Jakarta Sans', sans-serif; }
-
         .wcu-card {
           background: #f3f1ef;
           border-radius: 20px;
@@ -47,33 +42,12 @@ export default function WhyChooseUs() {
           transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
           min-height: 210px;
         }
-        
-        .wcu-icon {
-          color: #000000;
-          transition: color 0.2s;
-        }
-
-        .wcu-stat-item {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-
-        /* Stagger card entrance */
-        @keyframes wcu-fadein {
-          from { opacity: 0; transform: translateY(16px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .wcu-card-1 { animation: wcu-fadein 0.5s ease both 0.05s; }
-        .wcu-card-2 { animation: wcu-fadein 0.5s ease both 0.15s; }
-        .wcu-card-3 { animation: wcu-fadein 0.5s ease both 0.25s; }
-        .wcu-card-4 { animation: wcu-fadein 0.5s ease both 0.35s; }
       `}</style>
 
-      <section className="wcu-font w-full">
+      <section className="w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-16 lg:py-20">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-10 items-start">
-            {/* ── LEFT COLUMN ──────────────────────────────────────────────── */}
+            {/* LEFT COLUMN */}
             <div className="lg:w-[35%]  flex flex-col gap-6 lg:sticky lg:top-28">
               {/* Headline */}
               <h2 style={{ fontSize: "2rem", fontWeight: 600, lineHeight: 1.2, color: "#000000", letterSpacing: "-0.02em", maxWidth: "14ch" }}>Trusted partners who deliver peace of mind</h2>
@@ -84,15 +58,13 @@ export default function WhyChooseUs() {
               </p>
             </div>
 
-            {/* ── RIGHT COLUMN — 2×2 cards ─────────────────────────────── */}
+            {/*  RIGHT COLUMN  */}
             <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {FEATURES.map((f, i) => (
                 <div key={f.id} className={`wcu-card wcu-card-${i + 1}`}>
                   {/* Icon */}
                   <img src={f.icon} alt={f.title ?? ""} style={{ width: 48, height: 48, objectFit: "contain", display: "block" }} />
-                  {/* <div className="wcu-icon">{f.icon}</div> */}
 
-                  {/* Text */}
                   <div className="flex flex-col gap-2">
                     <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#111111", lineHeight: 1.3 }}>{f.title}</h3>
                     <p style={{ fontSize: "0.8125rem", color: "#7a7060", lineHeight: 1.65, fontWeight: 500 }}>{f.desc}</p>

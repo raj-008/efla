@@ -38,9 +38,6 @@ export default function StatsBento() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        .bento-font { font-family: 'Plus Jakarta Sans', sans-serif; }
-
         .bento-grid {
           display: grid;
           grid-template-columns: 1.4fr 1fr;
@@ -92,7 +89,7 @@ export default function StatsBento() {
         .bento-dark    { animation: bento-in 0.5s ease both 0.34s; }
       `}</style>
 
-      <section className="bento-font w-full">
+      <section className="w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-14 lg:py-16">
           {/* ── Header ─────────────────────────────────────────────────── */}
           <div className="flex flex-col items-center text-center mb-30">

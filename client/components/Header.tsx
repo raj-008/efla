@@ -77,9 +77,8 @@ function Logo({ compact }: { compact: boolean }) {
         style={{
           fontSize: "1.5rem",
           color: "#000000",
-          letterSpacing: "0.03em",
+          letterSpacing: "0.02em",
           lineHeight: 1,
-          fontFamily: "'Source Sans 3', sans-serif",
           fontWeight: 700,
         }}
       >
@@ -293,7 +292,6 @@ export default function Header() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
         @keyframes dropdown {
           from { opacity: 0; transform: translateX(-40px) translateY(-6px); }
           to   { opacity: 1; transform: translateX(-40px) translateY(0); }
