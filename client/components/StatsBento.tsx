@@ -116,7 +116,7 @@ export default function StatsBento() {
                       Whether it&apos;s a local seller or a large enterprise, we are shipping thousands of orders across every corner of India
                     </p>
                   </div>
-                  <div className="shrink-0 self-end relative z-10" style={{ width: "clamp(130px, 26%, 280px)", marginBottom: -26 }}>
+                  <div className="shrink-0 self-end relative z-10 hidden sm:block" style={{ width: "clamp(130px, 26%, 280px)", marginBottom: -26 }}>
                     <img src="/assets/delivery-van.png" alt="Delivery vehicle" style={{ width: "100%", height: "auto", objectFit: "contain", display: "block" }} />
                   </div>
                 </div>
