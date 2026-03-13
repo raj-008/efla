@@ -91,7 +91,7 @@ export default function StatsBento() {
 
       <section className="w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-14 lg:py-16">
-          {/* ── Header ─────────────────────────────────────────────────── */}
+          {/* Header */}
           <div className="flex flex-col items-center text-center mb-30">
             <p style={{ fontSize: "clamp(1rem, 2.3vw, 1.6rem)", fontWeight: 600, color: "#111111", lineHeight: 1.42, maxWidth: "46ch", letterSpacing: "-0.02em" }}>
               We&apos;re not just about trucks and timelines, we&apos;re about trust and responsibility. Our mission is to make every shipment smooth, secure, and stress-free from the first order
@@ -99,9 +99,9 @@ export default function StatsBento() {
             </p>
           </div>
 
-          {/* ── Grid ───────────────────────────────────────────────────── */}
+          {/* Grid */}
           <div className="bento-grid">
-            {/* 1 ── Yellow stat card ─────────────────────────────────── */}
+            {/* Yellow stat card */}
             <div className="bento-card bento-yellow" style={{ background: "#F8D166" }}>
               <DottedArc />
               <div className="flex flex-col justify-between h-full p-7 sm:p-8 gap-4">
@@ -123,25 +123,25 @@ export default function StatsBento() {
               </div>
             </div>
 
-            {/* 3+4 ── Bottom-left sub-grid ───────────────────────────── */}
+            {/* Bottom-left sub-grid */}
             <div className="bento-bottom-left">
-              {/* 3 ── Mascot / illustration card ────────────────────── */}
+              {/*  Mascot / illustration card  */}
               <div className="bento-card bento-illus flex items-center justify-center" style={{ background: "#eceae0" }}>
                 <img src="/assets/package.png" alt="Brand mascot" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               </div>
 
-              {/* 4 ── Orders Delivered stat ────────────────────────── */}
+              {/*  Orders Delivered stat */}
               <div className="bento-card bento-white flex flex-col justify-between p-5 sm:p-6" style={{ background: "#f3f1ef" }}>
                 <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "#000000", letterSpacing: "0.04em" }}>Orders Delivered</span>
                 <div className="flex flex-col gap-2">
-                  {/* ── CountUp: 0 → 10 (displayed as 10M+) ── */}
-                  <span style={{ fontSize: "clamp(1.7rem, 2.8vw, 0.78rem)", fontWeight: 600, color: "#111111", letterSpacing: "-0.03em", lineHeight: 1 }}>10M+</span>{" "}
+                  {/*  CountUp: 0 → 10 (displayed as 10M+)  */}
+                  <span style={{ fontSize: "clamp(1.7rem, 2.8vw, 0.78rem)", fontWeight: 600, color: "#111111", letterSpacing: "-0.03em", lineHeight: 1 }}>10K+</span>
                   <p style={{ fontSize: "0.8rem", fontWeight: 500, color: "#7a7060", lineHeight: 1.6 }}>Millions of successful deliveries and counting, every single day.</p>
                 </div>
               </div>
             </div>
 
-            {/* 5 ── Dark satisfaction card ───────────────────────────── */}
+            {/*  Dark satisfaction card */}
             <div className="bento-card bento-dark flex flex-col justify-between p-6 sm:p-7" style={{ background: "#111111" }}>
               <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "white", letterSpacing: "0.04em" }}>Customer satisfaction</span>
               <div className="flex flex-col gap-4">

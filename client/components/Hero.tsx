@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 
 type MainCategory = "logistics" | "ecommerce" | "printing";
 
@@ -32,9 +32,11 @@ interface RateResult {
 }
 
 const LOGISTICS_SUBS: SubService[] = [
-  { id: "road", label: "Surface  Courier" },
   { id: "express", label: "Express Courier" },
-  { id: "air", label: "Air Courier" },
+  { id: "air", label: "Air Cargo Courier" },
+  { id: "road", label: "Surface Cargo Courier" },
+  { id: "prime", label: "Prime Service" },
+  { id: "international", label: "International Courier" },
 ];
 
 const ECOMMERCE_SUBS: SubService[] = [
@@ -71,6 +73,8 @@ const DELIVERY_ESTIMATES: Record<string, { time: string }> = {
   air: { time: "1–2 Business Days" },
   road: { time: "3–7 Days" },
   express: { time: "2–3 Days" },
+  international: { time: "1-2 Week" },
+  prime: { time: "Custom Date" },
 };
 
 const SLIDER_IMAGES = [
@@ -115,7 +119,7 @@ function ImageSlider() {
   }, [go]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full mx-auto">
       <div className="relative w-full overflow-hidden rounded-2xl" style={{ height: "clamp(135px, 21vw, 240px)" }}>
         {/* Slides */}
         {SLIDER_IMAGES.map((img, i) => (
@@ -323,7 +327,6 @@ function RateDisplay({ rate, onBook }: { rate: RateResult; onBook: () => void })
   );
 }
 
-
 function ComingSoon({ category }: { category: string }) {
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-12 px-6 text-center rounded-2xl" style={{ background: "rgba(248,209,102,0.08)" }}>
@@ -405,16 +408,12 @@ function RateCard({ category, selectedSub, onSubSelect }: { category: MainCatego
   const [from, setFrom] = useState<AddressForm>(emptyAddress());
   const [to, setTo] = useState<AddressForm>(emptyAddress());
   const [pkg, setPkg] = useState<PackageForm>({ weight: "", length: "", width: "", height: "" });
-  const [rate, setRate] = useState<RateResult | null>(null);
   const isLogistics = category === "logistics";
 
-  useEffect(() => {
-    if (!isLogistics) return;
-    if (canAutoCalculate(from.pincode, to.pincode, pkg)) {
-      setRate(calcRate(parseFloat(pkg.weight), parseFloat(pkg.length), parseFloat(pkg.width), parseFloat(pkg.height)));
-    } else {
-      setRate(null); 
-    }
+  const rate = useMemo<RateResult | null>(() => {
+    if (!isLogistics) return null;
+    if (!canAutoCalculate(from.pincode, to.pincode, pkg)) return null;
+    return calcRate(parseFloat(pkg.weight), parseFloat(pkg.length), parseFloat(pkg.width), parseFloat(pkg.height));
   }, [from.pincode, to.pincode, pkg, isLogistics]);
 
   const estimates = selectedSub ? DELIVERY_ESTIMATES[selectedSub] : null;
@@ -449,8 +448,7 @@ function RateCard({ category, selectedSub, onSubSelect }: { category: MainCatego
                 </div>
               )}
 
-
-<div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-5">
                 {/* From / To — side by side with vertical divider */}
                 <div className="flex flex-col md:flex-row gap-5 md:gap-0">
                   <AddressSection
@@ -529,11 +527,7 @@ function RateCard({ category, selectedSub, onSubSelect }: { category: MainCatego
                   </div>
                 </div>
 
-                {!rate && (
-  <p style={{ fontSize: "0.7rem", color: "#b0a888", textAlign: "center" }}>
-    Enter both 6-digit pincodes + package dimensions to see rate automatically
-  </p>
-)}
+                {!rate && <p style={{ fontSize: "0.7rem", color: "#b0a888", textAlign: "center" }}>Enter both 6-digit pincodes + package dimensions to see rate automatically</p>}
 
                 {rate && <RateDisplay rate={rate} onBook={() => alert("Booking flow coming soon!")} />}
               </div>
@@ -607,10 +601,11 @@ export default function HeroSection() {
 
       <section className="hero-font relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-24 pb-16 px-4 gap-8" style={{ background: "#f3f1ef" }}>
         <BackgroundPaths />
+        <div className="w-full mx-6 lg:mx-10">
+          <ImageSlider />
+        </div>
 
         <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center gap-8">
-          <ImageSlider />
-
           <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4">
             {MAIN_SERVICES.map((svc) => (
               <ServiceCard
