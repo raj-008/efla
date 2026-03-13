@@ -13,10 +13,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicons/favicon.ico", sizes: "32x32", type: "image/png" },
-      { url: "/favicons/favicon.ico", sizes: "any" },
+      { url: "/favicons/icon1.png", sizes: "any" },
     ],
     apple: [{ url: "/favicons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
-    other: [{ rel: "mask-icon", url: "/favicons/favicon.svg", color: "#0c0c0c" }],
+    other: [{ rel: "mask-icon", url: "/favicons/icon0.svg", color: "#0c0c0c" }],
   },
   title: "Efla | Logistics Ecommerce & Printing Services",
   description: "Efla, We are the best Logistics, Courier, Ecommerce & Printing Service Provider",
