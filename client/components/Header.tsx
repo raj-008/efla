@@ -59,20 +59,24 @@ function ChevronRight({ open }: { open?: boolean }) {
 }
 
 function Logo({ compact }: { compact: boolean }) {
+  const height = compact ? 36 : 42;
+  const width = Math.round((334 / 100) * height);
+
   return (
-    <Link href="/" className="flex items-center gap-1.5 shrink-0">
-      <img src="/assets/logo.png" alt="Efla Logo" className="object-contain transition-all duration-300" style={{ height: compact ? "36px" : "42px", width: "auto" }} />
-      <span
+    <Link href="/" className="shrink-0 flex items-center">
+      <img
+        src="/assets/logo.png"
+        alt="Efla"
+        width={width}
+        height={height}
         style={{
-          fontSize: "1.5rem",
-          color: "#000000",
-          letterSpacing: "0.02em",
-          lineHeight: 1,
-          fontWeight: 700,
+          width,
+          height,
+          objectFit: "contain",
+          transition: "width 0.3s, height 0.3s",
+          display: "block",
         }}
-      >
-        Efla
-      </span>
+      />
     </Link>
   );
 }
@@ -301,7 +305,7 @@ export default function Header() {
           `}
         >
           <div className="flex items-center justify-between gap-4">
-            <Logo compact={true} />
+            <Logo compact={isPill} />
 
             <nav className="hidden lg:flex items-center gap-6 xl:gap-7">
               {NAV_ITEMS.map((item) => (
@@ -322,7 +326,6 @@ export default function Header() {
               aria-expanded={mobileOpen}
             >
               {mobileOpen ? (
-                /* Clean X icon */
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                   <path d="M2 2L16 16M16 2L2 16" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" />
                 </svg>

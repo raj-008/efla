@@ -73,6 +73,27 @@ const SOCIALS = [
     ),
   },
 ];
+function FooterLogo() {
+  const height = 40;
+  const width = Math.round((334 / 100) * height); // ≈ 134
+
+  return (
+    <Link href="/" className="flex items-center">
+      <img
+        src="/assets/logo.png"
+        alt="Efla"
+        width={width}
+        height={height}
+        style={{
+          width,
+          height,
+          objectFit: "contain",
+          display: "block",
+        }}
+      />
+    </Link>
+  );
+}
 
 export default function Footer() {
   return (
@@ -93,13 +114,10 @@ export default function Footer() {
       <footer className="w-full" style={{ background: "#111111", color: "white" }}>
         <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 pt-14 pb-8">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-8">
+            {/* Brand column */}
             <div className="flex flex-col gap-5 lg:w-56 shrink-0">
-              <Link href="/" className="flex items-center gap-2.5">
-                <img src="/assets/logo.png" alt="EFLA Logo" style={{ height: 36, width: "auto", objectFit: "contain", display: "block" }} />
-                <span style={{ fontSize: "1.4rem", letterSpacing: "0.03em", fontFamily: "'Source Sans 3', sans-serif" }} className="text-white font-semibold">
-                  Efla
-                </span>
-              </Link>
+              {/* Single logo image */}
+              <FooterLogo />
 
               <hr style={{ border: "none", borderTop: "1px solid rgba(255,255,255,0.1)", width: "100%" }} />
 
@@ -131,6 +149,7 @@ export default function Footer() {
               </div>
             </div>
 
+            {/* Nav link columns */}
             <div className="flex-1 flex flex-col gap-10">
               <div className="sm:ms-12 grid grid-cols-2 sm:grid-cols-3 gap-8">
                 {Object.entries(NAV_LINKS).map(([title, links]) => (
@@ -149,6 +168,7 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Bottom bar */}
           <div className="mt-14 pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.12)" }}>
             <div className="flex flex-col gap-2">
               <p style={{ fontSize: "0.8125rem", fontWeight: 700, color: "white" }}>Company Information:</p>

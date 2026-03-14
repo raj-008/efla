@@ -50,18 +50,6 @@ function Logo() {
           width: "auto",
         }}
       />
-      <span
-        style={{
-          fontSize: "1.5rem",
-          color: "#000000",
-          letterSpacing: "0.02em",
-          lineHeight: 1,
-          fontFamily: "'Source Sans 3', sans-serif",
-          fontWeight: 700,
-        }}
-      >
-        Efla
-      </span>
     </Link>
   );
 }
